@@ -6,7 +6,7 @@ export function fetchBreeds() {
   return axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then(response => {
-      return response.json();
+      return response.data;
     })
     .catch(error => {
       new Error('Oops! Something went wrong! Try reloading the page!');
