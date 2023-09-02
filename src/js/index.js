@@ -49,14 +49,15 @@ breedSelect.addEventListener('change', e => {
   fetchCatByBreed(breedId)
     .then(cat => {
       console.log(cat);
+      const { name, description, temperament } = cat[0].breeds[0];
       catInfo.innerHTML = `
     <div>
-    <img src="${cat[0].url}" alt="${cat[0].breeds[0].name}" width="400"/>
+    <img src="${cat[0].url}" alt="${name}" width="400"/>
   </div>
   <div class="pretty">
-    <h1>${cat[0].breeds[0].name}</h1>
-    <p>${cat[0].breeds[0].description}</p>
-    <p><b>Temperament:</b> ${cat[0].breeds[0].temperament}</p>
+    <h1>${name}</h1>
+    <p>${description}</p>
+    <p><b>Temperament:</b> ${temperament}</p>
   </div>`;
       Loading.remove();
       catInfo.classList.remove('is-hidden');
