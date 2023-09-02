@@ -1,0 +1,41 @@
+@import '~node_modules/modern-normalize/modern-normalize.css';
+
+.is-hidden {
+  display: none;
+}
+
+body {
+  background-color: #e1fdff;
+  margin-left: 20px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+img {
+  max-width: 100%;
+  border: 2px solid #08aaf0;
+  display: block;
+  border-radius: 6px;
+  box-shadow: 2px 2px 12px;
+}
+
+.breed-select {
+  max-width: 250px;
+  margin: 0;
+}
+
+.cat-info {
+  margin-top: 20px;
+  display: flex;
+  gap: 30px;
+}
+
+.pretty {
+  padding: 20px;
+  max-width: 700px;
+  background-color: #6de0eb;
+  border: 2px solid #d014ed;
+
+  border-radius: 6px;
+  box-shadow: 5px 5px 25px;
+}

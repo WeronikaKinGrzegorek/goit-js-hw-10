@@ -13,55 +13,60 @@ const catInfo = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 const error = document.querySelector('.error');
 
+breedSelect.classList.add('is-hidden');
+catInfo.classList.add('is-hidden');
+loader.classList.add('is-hidden');
+error.classList.add('is-hidden');
+
 fetchBreeds()
   .then(breeds => {
-    console.log(breeds);
+    console.log('all breads', breeds);
     breeds.forEach(breed => {
-      console.log(breed);
+      breedSelect.classList.remove('is-hidden');
+      console.log('breed', breed.name);
       const option = document.createElement('option');
       option.value = breed.id;
       option.textContent = breed.name;
       breedSelect.appendChild(option);
-
-      new SlimSelect({
-        select: '.breed-select',
-      });
     });
-
-    fetchCatByBreed(breeds.id);
+    new SlimSelect({
+      select: '.breed-select',
+    });
   })
-  .catch(error);
+  .catch(error => {
+    console.log(error);
+    Loading.remove();
+    Notify.failure('Oops! Something went wrong! Try reloading the page!', {
+      timeout: 4000,
+      fontSize: '20px',
+    });
+  });
 
 breedSelect.addEventListener('change', e => {
   Loading.circle('Loading data, please wait...');
-  const breedId = e.target;
-  console.log(e.target);
-  console.log(breedId);
-  console.log(typeof breedId);
-  fetchCatByBreed(breedId).then(cat => {
-    console.log(cat);
-    catInfo.innerHTML = `
+  const breedId = e.target.value;
+
+  fetchCatByBreed(breedId)
+    .then(cat => {
+      console.log(cat);
+      catInfo.innerHTML = `
     <div>
     <img src="${cat[0].url}" alt="${cat[0].breeds[0].name}" width="400"/>
   </div>
-  <div>
+  <div class="pretty">
     <h1>${cat[0].breeds[0].name}</h1>
     <p>${cat[0].breeds[0].description}</p>
-    <p><strong>Temperament:</strong> ${cat[0].breeds[0].temperament}</p>
+    <p><b>Temperament:</b> ${cat[0].breeds[0].temperament}</p>
   </div>`;
-  });
-  Loading.remove();
+      Loading.remove();
+      catInfo.classList.remove('is-hidden');
+    })
+    .catch(error => {
+      console.log(error);
+      Loading.remove();
+      Notify.failure('Oops! Something went wrong! Try reloading the page!', {
+        timeout: 4000,
+        fontSize: '20px',
+      });
+    });
 });
-
-// fetchBreeds().then(breeds => {
-//   console.log(breeds);
-//   for (let i = 0; i < breeds.length; i++) {
-//     const breed = breeds[i];
-//     const option = document.createElement('option');
-//     option.value = i;
-//     option.textContent = breed.name;
-//     breedSelect.appendChild(option);
-//   }
-
-//   fetchCatByBreed(breeds[0].id);
-// });
